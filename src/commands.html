@@ -1,0 +1,51 @@
+<script type="text/javascript">
+    const commands = '{commands}'
+
+    function registerType(command) {
+        let label = command.charAt(0).toUpperCase() + command.slice(1)
+        let paletteLabel = label
+        RED.nodes.registerType(`tmi-command-${command}`, {
+            category: "Streaming Tools",
+            color: "#6441a5",
+            defaults: {
+                config: {
+                    type: "tmi-config"
+                },
+                name: {
+                    value: ""
+                }
+            },
+            icon: "twitch-icon.png",
+            inputs: 1,
+            outputs: 1,
+            labelStyle: "tmi_node_label",
+            paletteLabel,
+            label: function() {
+                this.name
+            }
+        })
+    }
+
+    for(let command in commands){
+        registerType(command)
+    }
+
+</script>
+
+<script type="text/html" id="template" data-template-name="tmi-command-">
+    <div class="tmi-template">
+        <div class="form-row">
+            <label for="node-input-client"><i class="icon-tag"></i> Config</label>
+            <input type="text" id="node-input-client">
+        </div>
+        <div class="form-row">
+            <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+            <input type="text" id="node-input-name">
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="tmi-command">
+    <p>Command node</p>
+</script>

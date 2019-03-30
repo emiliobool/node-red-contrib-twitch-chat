@@ -1,0 +1,47 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tmi-config', {
+        category: 'config',
+        defaults: {
+            name: {
+                value: '',
+            },
+            username: {
+                value: '',
+            },
+            password: {
+                value: '',
+            },
+            channels: {
+                value: '',
+            },
+        },
+        label: function() {
+            return this.name || this.username
+        },
+    })
+</script>
+<style></style>
+<script type="text/html" data-template-name="tmi-config">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Config Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <h3>Identity</h3>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-username"><i class="icon-tag"></i> Username</label>
+        <input type="text" id="node-config-input-username">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="icon-tag"></i> Password</label>
+        <input type="text" id="node-config-input-password">
+    </div>
+    <div class="form-row">
+        <h3>Channels</h3>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-channels"><i class="icon-tag"></i> Channels</label>
+        <input type="text" id="node-config-input-channels" />
+    </div>
+</script>

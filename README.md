@@ -1,6 +1,6 @@
 # node-red-contrib-tmijs
 
-Node wrappers for tmi.js
+Wrapper nodes for tmi.js
 
 ### Nodes
 

@@ -1,29 +1,26 @@
+const path = require('path')
 const { watch, src, dest, parallel, series } = require('gulp')
 const inject = require('gulp-inject-string')
 const ts = require('gulp-typescript')
 const del = require('del')
-
-const events = require('./src/events')
-const commands = require('./src/commands')
+const rename = require('gulp-rename')
 
 const tsProject = ts.createProject('./tsconfig.json')
-const es = require('event-stream')
+const through2 = require('through2')
 
 const htmlTask = parallel([
     () =>
         src('src/*.html.ts')
             .pipe(
-                es.map(function(file: any, cb: any) {
-                    console.log(JSON.stringify(file))
-                    return file
-                    // inject.append(contents)
+                through2.obj(function(file: any, _: any, cb: any) {
+                    const { contents } = require(file.path)
+                    file.contents = Buffer.from(contents)
+                    cb(null, file)
                 })
-            ),
-    () =>
-        src('src/*.html')
-            .pipe(inject.replace("'{commands}'", JSON.stringify(commands)))
-            .pipe(inject.replace("'{events}'", JSON.stringify(events)))
+            )
+            .pipe(rename({ extname: '' }))
             .pipe(dest('lib')),
+    () => src('src/*.html').pipe(dest('lib')),
     () => src('./src/icons/**').pipe(dest('./lib/icons')),
 ])
 

@@ -8,6 +8,7 @@
       "config": "lib/config.js",
       "commands": "lib/commands.js",
       "events": "lib/events.js",
+      "message": "lib/message.js",
       "css": "lib/css.js"
     }
   },
@@ -32,7 +33,9 @@
     "eslint": "^5.15.3",
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-inject-string": "^1.1.2",
+    "gulp-rename": "^1.4.0",
     "gulp-typescript": "^5.0.1",
     "mocha": "^6.0.2",
     "node-red": "^0.20.3",

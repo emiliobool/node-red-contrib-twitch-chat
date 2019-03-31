@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tmi-command-{{ command }}', {
+        'category': 'Twitch Chat',
+        'color': '#6441a5',
+        'defaults': {
+            'config': {
+                'type': 'tmi-config',
+                'value': ''
+            },
+            'name': {
+                'value': ''
+            }
+        },
+        'align': 'right',
+        'icon': 'twitch-arrow.png',
+        'inputs': 1,
+        'outputs': 2,
+        'labelStyle': 'tmi_node_label',
+        'paletteLabel': '{{ title }}',
+        'label': function () {
+            return this.name || '{{ title }}';
+        }
+    })
+</script>
+<script type="text/html" data-template-name="tmi-command-{{ command }}">
+    <div class="tmi-template">
+        <div class="form-row">
+            <label for="node-input-config">
+                <i class="icon-cog"></i>
+                Config</label>
+            <input type="text" id="node-input-config">
+        </div>
+        <div class="form-row">
+            <label for="node-input-name">
+                <i class="icon-tag"></i>
+                Name</label>
+            <input type="text" id="node-input-name">
+        </div>
+    </div>
+</script>
+<script type="text/html" data-help-name="tmi-command-{{ command }}">
+    <p>{{ title }}
+        Event Node</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload<span class="property-type">object</span></dt>
+        <dd>
+            the parameters of the command as defined in
+            <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
+                tmi.js parameters</a>
+        </dd>
+    </dl>
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Resolved output
+            <dl class="message-properties">
+                <dt>payload
+                    <span class="property-type">object</span></dt>
+                <dd>Resolved promise object from
+                    <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
+                        tmi.js</a>.</dd>
+            </dl>
+        </li>
+        <li>Rejected output
+            <dl class="message-properties">
+                <dt>payload
+                    <span class="property-type">object</span></dt>
+                <dd>Rejected promise error object from
+                    <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
+                        tmi.js</a>.</dd>
+            </dl>
+        </li>
+    </ol>
+    <h3>Node Properties</h3>
+    <dl class="">
+        <dt class="optional">Config</dt>
+        <dd>tmi.js Settings to use</dd>
+        <dt class="optional">Name</dt>
+        <dd>Node name used as label</dd>
+    </dl>
+
+</script>

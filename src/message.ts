@@ -22,20 +22,25 @@ interface TmiMessageConfig extends NodeProperties {
     message: string
 }
 
-module.exports = function(RED: Red) {
-    RED.nodes.registerType(`tmi-event-${event}`, function(
+export function MessageNode(RED: Red) {
+    RED.nodes.registerType(`tmi-event-message`, function(
         this: Node,
         config: TmiMessageConfig
     ): void {
         RED.nodes.createNode(this, config)
-
+        if(!config.config) return;
         const configNode = RED.nodes.getNode(config.config) as TmiClientNode
+        if(!configNode) return;
         const client = configNode.client as any
 
         const channels = config.channels
             .split(',')
-            .map(channel => channel.trim())
-        const users = config.users.split(',').map(user => user.trim())
+            .map(channel => channel.trim().replace(/^#/, ''))
+            .filter(Boolean)
+        const users = config.users
+            .split(',')
+            .map(user => user.trim().toLowerCase())
+            .filter(Boolean)
         const ignoreMessageType =
             !config.action && !config.chat && !config.whisper
         const messageTypes: string[] = []

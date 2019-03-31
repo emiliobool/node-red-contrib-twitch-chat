@@ -1,0 +1,134 @@
+<script type="text/javascript">
+    RED.nodes.registerType("tmi-event-message", {
+        category: "Twitch Chat",
+        color: "#6441a5",
+        defaults: {
+            config: {
+                type: "tmi-config"
+            },
+            name: {
+                value: ""
+            },
+            channels: {
+                value: ""
+            },
+            users: {
+                value: ""
+            },
+            action: {
+                value: false
+            },
+            chat: {
+                value: true
+            },
+            whisper: {
+                value: false
+            },
+            regular: {
+                value: false
+            },
+            mod: {
+                value: false
+            },
+            subscriber: {
+                value: false
+            },
+            broadcaster: {
+                value: false
+            },
+            message: {
+                value: ""
+            }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "twitch-arrow.png",
+        paletteLabel: "Message",
+        label: function () {
+            return this.name || "Incoming Message"
+        },
+        labelStyle: "tmi_node_label"
+    })
+</script>
+<script type="text/html" data-template-name="tmi-event-message">
+    <div class="tmi-template">
+
+        <div class="form-row">
+            <label for="node-input-config"><i class="icon-cog"></i> Config</label>
+            <input type="text" id="node-input-config">
+        </div>
+        <div class="form-row">
+            <label for="node-input-channels"><i class="icon-th-large"></i> Channels</label>
+            <input type="text" id="node-input-channels">
+        </div>
+        <div class="form-row">
+            <label for="node-input-users"><i class="icon-user"></i> Users</label>
+            <input type="text" id="node-input-users">
+        </div>
+        <div class="form-row checkboxes">
+            <input type="checkbox" id="node-input-action">
+            <label for="node-input-action" style="width: auto">Action</label>
+            <input type="checkbox" id="node-input-chat">
+            <label for="node-input-chat" style="width: auto">Chat</label>
+            <input type="checkbox" id="node-input-whisper">
+            <label for="node-input-whisper" style="width: auto">Whisper</label>
+        </div>
+        <div class="form-row checkboxes">
+            <input type="checkbox" id="node-input-regular">
+            <label for="node-input-regular" style="width: auto">Regular</label>
+            <input type="checkbox" id="node-input-mod">
+            <label for="node-input-mod" style="width: auto">Moderator</label>
+            <input type="checkbox" id="node-input-subscriber">
+            <label for="node-input-subscriber" style="width: auto">Subscriber</label>
+            <input type="checkbox" id="node-input-broadcaster">
+            <label for="node-input-broadcaster" style="width: auto">Broadcaster</label>
+        </div>
+
+        <div class="form-row">
+            <label for="node-input-command"><i class="icon-envelope"></i> Message</label>
+            <input type="text" id="node-input-message">
+        </div>
+
+        <div class="form-row">
+            <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+            <input type="text" id="node-input-name">
+        </div>
+    </div>
+</script>
+<script type="text/html" data-help-name="tmi-event-message">
+    <p>Outputs received messages</p>
+
+    <h3>Inputs</h3>
+    No Inputs accepted
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Same name properties from <a href="https://docs.tmijs.org/v1.4.2/Events.html#message">
+                        tmi.js parameters</a> plus a <strong>"matches"</strong> property.</dd>
+            </dl>
+        </li>
+    </ol>
+    <h3>Node Properties</h3>
+    <p>All properties are optional</p>
+    <dl class="">
+        <dt class="optional">Config</dt>
+        <dd>tmi.js Settings to use</dd>
+        <dt class="optional">Channels</dt>
+        <dd>Comma separated list of channels (without #) to accept</dd>
+        <dt class="optional">Users</dt>
+        <dd>Comma separated list of users to accept</dd>
+        <dt>Message Type</dt>
+        <dd>What type of messages to accept</dd>
+        <dt>User Type</dt>
+        <dd>What type of user to accept</dd>
+        <dt class="optional">Message</dt>
+        <dd>RegExp string to match the message being received, matches will be added to the payload property
+            <strong>"matches"</strong></dd>
+        <dt class="optional">Name</dt>
+        <dd>Node name used as label</dd>
+
+    </dl>
+</script>

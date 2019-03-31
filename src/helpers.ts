@@ -1,3 +1,7 @@
+const path = require('path')
+export const nunjucks = require('nunjucks')
+nunjucks.configure(path.resolve(__dirname, 'templates'), { autoescape: true })
+
 export function stringifyFunctions(data: any) {
     const replacements: any = {}
     let stringified = JSON.stringify(data, (key, value) => {
@@ -12,7 +16,7 @@ export function stringifyFunctions(data: any) {
         } else {
             return value
         }
-    })
+    }, 4)
     for (let key in replacements) {
         stringified = stringified.replace(`"${key}"`, replacements[key])
     }
@@ -20,12 +24,15 @@ export function stringifyFunctions(data: any) {
 }
 export function getRegisterTypeTag(type: string, definition: NodeDefinition): string {
     const definitionString = stringifyFunctions(definition)
-    return wrapNode(`RED.nodes.registerType('${type}', ${definitionString})`)
+    return wrapNode(`
+let definition = ${definitionString}
+RED.nodes.registerType('${type}', definition)
+`)
 }
 
 
 export function wrapNode(contents: string): string{
-    return `<script type="text/javascript">${contents}</script>`
+    return `<script type="text/javascript">(function(){${contents}}())</script>`
 }
 export function wrapTemplate(type: string, contents: string): string{
     return `<script type="text/html" data-template-name="${type}">${contents}</script>`

@@ -1,26 +1,28 @@
 <script type="text/javascript">
-    RED.nodes.registerType('tmi-event-{{ event }}', {
-        category: 'Twitch Chat',
-        color: '#6441a5',
-        defaults: {
-            config: {
-                type: 'tmi-config',
-                value: ''
+    RED
+        .nodes
+        .registerType('tmi-event-{{ event }}', {
+            category: 'Twitch Chat',
+            color: '#6441a5',
+            defaults: {
+                config: {
+                    type: 'tmi-config',
+                    value: ''
+                },
+                name: {
+                    value: ''
+                }
             },
-            name: {
-                value: ''
+            'align': 'left',
+            'icon': 'twitch-arrow.png',
+            'inputs': 0,
+            'outputs': 1,
+            'labelStyle': 'tmi_node_label',
+            'paletteLabel': '{{ title }}',
+            'label': function () {
+                return this.name || '{{ title }}';
             }
-        },
-        'align': 'left',
-        'icon': 'twitch-arrow.png',
-        'inputs': 0,
-        'outputs': 1,
-        'labelStyle': 'tmi_node_label',
-        'paletteLabel': '{{ title }}',
-        'label': function () {
-            return this.name || '{{ title }}';
-        }
-    })
+        })
 </script>
 <script type="text/html" data-template-name="tmi-event-{{ event }}">
     <div class="tmi-template">
@@ -39,27 +41,33 @@
     </div>
 </script>
 <script type="text/html" data-help-name="tmi-event-{{ event }}">
-    <p>{{ title }}
-        Event Node</p>
+    <h2>{{ title }}
+        Event Node</h2>
+    <p>[ <a href="https://docs.tmijs.org/v1.4.2/Events.html#{{ event }}">tmi.js doc entry</a> ]</p>
     <h3>Inputs</h3>
     No Inputs accepted
     <h3>Outputs</h3>
-    <ol class="node-ports">
+    <ol class="">
         <li>Standard output
             <dl class="message-properties">
                 <dt>payload
-                    <span class="property-type">object</span></dt>
-                <dd>Same name properties from
-                    <a href="https://docs.tmijs.org/v1.4.2/Events.html#{{ event }}">
-                        tmi.js parameters</a>.</dd>
+                    <span class="property-type">object</span>
+                </dt>
+                <dd>
+                    <ul>
+                        {% for argument in arguments %}
+                            <li>{{ argument }}</li>
+                        {% endfor %}
+                    </ul>
+                </dd>
             </dl>
         </li>
     </ol>
     <h3>Node Properties</h3>
     <dl class="">
-        <dt class="optional">Name</dt>
-        <dd>Node name used as label</dd>
         <dt class="optional">Config</dt>
         <dd>tmi.js Settings to use</dd>
+        <dt class="optional">Name</dt>
+        <dd>Node name used as label</dd>
     </dl>
 </script>

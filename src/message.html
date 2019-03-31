@@ -96,23 +96,29 @@
     </div>
 </script>
 <script type="text/html" data-help-name="tmi-event-message">
-    <p>Outputs received messages</p>
+    <h2>Message Event Node</h2>
+    <p>[ <a href="https://docs.tmijs.org/v1.4.2/Events.html#message">tmi.js doc entry</a> ] </p>
 
     <h3>Inputs</h3>
     No Inputs accepted
 
     <h3>Outputs</h3>
-    <ol class="node-ports">
+    <ol class="">
         <li>Standard output
             <dl class="message-properties">
                 <dt>payload <span class="property-type">object</span></dt>
-                <dd>Same name properties from <a href="https://docs.tmijs.org/v1.4.2/Events.html#message">
-                        tmi.js parameters</a> plus a <strong>"matches"</strong> property.</dd>
+                <dd>
+                <ul>
+                    <li>channel</li>
+                    <li>userstate</li>
+                    <li>message</li>
+                    <li>self</li>
+                    <li>matches</li>
+                </ul>
             </dl>
         </li>
     </ol>
     <h3>Node Properties</h3>
-    <p>All properties are optional</p>
     <dl class="">
         <dt class="optional">Config</dt>
         <dd>tmi.js Settings to use</dd>

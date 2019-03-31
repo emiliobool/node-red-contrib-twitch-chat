@@ -1,26 +1,28 @@
 <script type="text/javascript">
-    RED.nodes.registerType('tmi-command-{{ command }}', {
-        'category': 'Twitch Chat',
-        'color': '#6441a5',
-        'defaults': {
-            'config': {
-                'type': 'tmi-config',
-                'value': ''
+    RED
+        .nodes
+        .registerType('tmi-command-{{ command }}', {
+            'category': 'Twitch Chat',
+            'color': '#6441a5',
+            'defaults': {
+                'config': {
+                    'type': 'tmi-config',
+                    'value': ''
+                },
+                'name': {
+                    'value': ''
+                }
             },
-            'name': {
-                'value': ''
+            'align': 'right',
+            'icon': 'twitch-arrow.png',
+            'inputs': 1,
+            'outputs': 2,
+            'labelStyle': 'tmi_node_label',
+            'paletteLabel': '{{ title }}',
+            'label': function () {
+                return this.name || '{{ title }}';
             }
-        },
-        'align': 'right',
-        'icon': 'twitch-arrow.png',
-        'inputs': 1,
-        'outputs': 2,
-        'labelStyle': 'tmi_node_label',
-        'paletteLabel': '{{ title }}',
-        'label': function () {
-            return this.name || '{{ title }}';
-        }
-    })
+        })
 </script>
 <script type="text/html" data-template-name="tmi-command-{{ command }}">
     <div class="tmi-template">
@@ -39,15 +41,19 @@
     </div>
 </script>
 <script type="text/html" data-help-name="tmi-command-{{ command }}">
-    <p>{{ title }}
-        Event Node</p>
+    <h2>{{ title }} Command Node</h2>
+    <p>[ <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
+        tmi.js doc entry</a> ]</p>
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt>payload<span class="property-type">object</span></dt>
         <dd>
-            the parameters of the command as defined in
-            <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
-                tmi.js parameters</a>
+            <ul>
+                {% for argument in arguments %}
+                    <li>{{ argument }}</li>
+                {% endfor %}
+            </ul>
+
         </dd>
     </dl>
     <h3>Outputs</h3>
@@ -56,18 +62,14 @@
             <dl class="message-properties">
                 <dt>payload
                     <span class="property-type">object</span></dt>
-                <dd>Resolved promise object from
-                    <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
-                        tmi.js</a>.</dd>
+                <dd>Resolved Promise</dd>
             </dl>
         </li>
         <li>Rejected output
             <dl class="message-properties">
                 <dt>payload
                     <span class="property-type">object</span></dt>
-                <dd>Rejected promise error object from
-                    <a href="https://docs.tmijs.org/v1.4.2/Commands.html#{{command}}">
-                        tmi.js</a>.</dd>
+                <dd>Rejected Promise</dd>
             </dl>
         </li>
     </ol>

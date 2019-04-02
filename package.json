@@ -19,7 +19,11 @@
         "tag": "next"
     },
     "release": {
-        "plugins": ["@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/npm"]
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "@semantic-release/npm"
+        ]
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",

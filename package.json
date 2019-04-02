@@ -1,72 +1,72 @@
 {
-  "name": "node-red-contrib-twitch-chat",
-  "version": "0.0.0-development",
-  "description": "TMI.js Wrappers for Node Red",
-  "main": "lib/main.js",
-  "node-red": {
-    "nodes": {
-      "main": "lib/main.js"
-    }
-  },
-  "engines": {
-    "node": ">=6"
-  },
-  "dependencies": {
-    "tmi.js": "^1.4.2"
-  },
-  "publishConfig": {
-    "access": "public",
-    "tag": "next"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.6",
-    "@types/node-red": "^0.17.3",
-    "@types/tmi.js": "^1.4.0",
-    "@typescript-eslint/parser": "^1.5.0",
-    "chai": "^4.2.0",
-    "del": "^4.0.0",
-    "dot-env": "0.0.1",
-    "dotenv": "^7.0.0",
-    "eslint": "^5.15.3",
-    "gulp": "^4.0.0",
-    "gulp-clean": "^0.4.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-inject-string": "^1.1.2",
-    "gulp-rename": "^1.4.0",
-    "gulp-typescript": "^5.0.1",
-    "mocha": "^6.0.2",
-    "node-red": "^0.20.3",
-    "node-red-node-test-helper": "^0.2.2",
-    "nunjucks": "^3.2.0",
-    "semantic-release": "^15.13.3",
-    "ts-node": "^8.0.3",
-    "typescript": "^3.4.1"
-  },
-  "scripts": {
-    "build": "npm run gulp -- build",
-    "prepare": "npm run build",
-    "prepublishOnly": "rm ./.gitignore",
-    "test": "npm run mocha -- -r ts-node/register src/**/*.spec.ts",
-    "tsc": "tsc",
-    "mocha": "mocha",
-    "gulp": "gulp",
-    "semantic-release": "semantic-release"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/emiliobool/node-red-contrib-twitch-chat.git"
-  },
-  "keywords": [
-    "node-red",
-    "tmi.js",
-    "twitch"
-  ],
-  "author": "Emilio Bool",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/emiliobool/node-red-contrib-twitch-chat/issues"
-  },
-  "homepage": "https://github.com/emiliobool/node-red-contrib-twitch-chat#readme"
+    "name": "node-red-contrib-twitch-chat",
+    "version": "0.0.0-development",
+    "description": "TMI.js Wrappers for Node Red",
+    "main": "lib/main.js",
+    "node-red": {
+        "nodes": {
+            "main": "lib/main.js"
+        }
+    },
+    "engines": {
+        "node": ">=8"
+    },
+    "dependencies": {
+        "tmi.js": "^1.4.2"
+    },
+    "publishConfig": {
+        "access": "public",
+        "tag": "next"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.6",
+        "@types/node-red": "^0.17.3",
+        "@types/tmi.js": "^1.4.0",
+        "@typescript-eslint/parser": "^1.5.0",
+        "chai": "^4.2.0",
+        "del": "^4.0.0",
+        "dot-env": "0.0.1",
+        "dotenv": "^7.0.0",
+        "eslint": "^5.15.3",
+        "gulp": "^4.0.0",
+        "gulp-clean": "^0.4.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-htmlmin": "^5.0.1",
+        "gulp-inject-string": "^1.1.2",
+        "gulp-rename": "^1.4.0",
+        "gulp-typescript": "^5.0.1",
+        "mocha": "^6.0.2",
+        "node-red": "^0.20.3",
+        "node-red-node-test-helper": "^0.2.2",
+        "nunjucks": "^3.2.0",
+        "semantic-release": "^15.13.3",
+        "ts-node": "^8.0.3",
+        "typescript": "^3.4.1"
+    },
+    "scripts": {
+        "build": "npm run gulp -- build",
+        "prepare": "npm run build",
+        "prepublishOnly": "rm ./.gitignore",
+        "test": "npm run mocha -- -r ts-node/register src/**/*.spec.ts",
+        "tsc": "tsc",
+        "mocha": "mocha",
+        "gulp": "gulp",
+        "semantic-release": "semantic-release"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/emiliobool/node-red-contrib-twitch-chat.git"
+    },
+    "keywords": [
+        "node-red",
+        "tmi.js",
+        "twitch"
+    ],
+    "author": "Emilio Bool",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/emiliobool/node-red-contrib-twitch-chat/issues"
+    },
+    "homepage": "https://github.com/emiliobool/node-red-contrib-twitch-chat#readme"
 }

@@ -1,4 +1,5 @@
 # node-red-contrib-twitch-chat
+
 [![Build Status](https://travis-ci.org/emiliobool/node-red-contrib-twitch-chat.svg?branch=master)](https://travis-ci.org/emiliobool/node-red-contrib-twitch-chat)
 
 Wrapper nodes for tmi.js v1.4.2
@@ -6,7 +7,7 @@ Wrapper nodes for tmi.js v1.4.2
 A connection is automatically established during configuration load.
 Options to disable this will be added in a future release.
 
-All inputs and outputs are 1:1 with tmi.js. 
+All inputs and outputs are 1:1 with tmi.js.
 
 Event outputs have the same names as the tmi.js documentation.
 Commands receive the same named properties as documented in tmi.js

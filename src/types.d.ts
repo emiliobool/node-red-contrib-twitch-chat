@@ -1,4 +1,3 @@
-
 type ValidateFunction = (value: any) => boolean
 interface PropertyDefinition {
     value: any

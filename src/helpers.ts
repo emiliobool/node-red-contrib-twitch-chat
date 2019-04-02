@@ -1,5 +1,5 @@
 /// <reference path="types.d.ts" />
-import { NodeStatus } from "node-red";
+import { NodeStatus } from 'node-red'
 
 const path = require('path')
 export const nunjucks = require('nunjucks')

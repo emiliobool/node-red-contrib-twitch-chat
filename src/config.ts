@@ -48,7 +48,7 @@ export function ConfigNode(RED: Red) {
 
         this.on('close', done => {
             this.client.removeAllListeners()
-            if(!['CLOSED', 'CLOSING'].includes(this.client.readyState())){
+            if (!['CLOSED', 'CLOSING'].includes(this.client.readyState())) {
                 this.client.disconnect().finally(done)
             }
         })

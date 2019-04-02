@@ -1,6 +1,10 @@
 import { Red, Node } from 'node-red'
 import { TmiClientNode } from './config'
-import { connectedStatus, connectingStatus, disconnectedStatus } from './helpers';
+import {
+    connectedStatus,
+    connectingStatus,
+    disconnectedStatus,
+} from './helpers'
 
 interface CommandArgList {
     [action: string]: string[]

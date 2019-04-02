@@ -21,8 +21,8 @@ export function configNode(options: any = {}): any {
             id: 'config',
             type: 'tmi-config',
             name: 'name',
-            username: USERNAME1,
-            password: PASSWORD1,
+            username: '',
+            password: '',
             channels: '',
             log_info: false,
             log_warn: false,
@@ -51,7 +51,7 @@ export function ConfigMockupNode(RED: Red) {
 
 describe('CONFIG', function(this: any) {
     // default node properties
-    describeFlow('tmi-config', function() {
+    describeFlow('tmi-config(anon)', function() {
         it('should load and connect', function(done) {
             nodes(ConfigNode)
             flow(configNode())
@@ -65,7 +65,21 @@ describe('CONFIG', function(this: any) {
             })
         })
     })
-    describeFlow('tmi-config(mockup)', function() {
+    describeFlow('tmi-config(login)', function() {
+        it('should load and connect', function(done) {
+            nodes(ConfigNode)
+            flow(configNode({ username: USERNAME1, password: PASSWORD1 }))
+            execute(function() {
+                getNode('config').should.have.property('name', 'name')
+                const client = getNode('config').client
+                client.on('connected', function() {
+                    expect(client.readyState()).to.equal('OPEN')
+                    done()
+                })
+            })
+        })
+    })
+    describeFlow('tmi-config(mockup,anon)', function() {
         it('should load and connect', function(done) {
             nodes(ConfigMockupNode)
             flow(configNode())

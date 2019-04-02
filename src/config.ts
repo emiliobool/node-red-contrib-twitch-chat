@@ -6,6 +6,8 @@ export interface TmiClientConfig extends NodeProperties {
     username: string
     password: string
     channels: string
+    reconnect: boolean
+    secure: boolean
     log_info: boolean
     log_warn: boolean
     log_error: boolean
@@ -30,17 +32,21 @@ export function ConfigNode(RED: Red) {
         if (config.log_error) logger.error = this.error.bind(this)
         else logger.error = () => {}
 
+        if (config.reconnect === undefined) config.reconnect = true
+        if (config.secure === undefined) config.secure = true
+
         const options: tmi.Options = {
             connection: {
-                reconnect: true,
-                secure: true,
-            },
-            identity: {
-                username: config.username,
-                password: config.password,
+                reconnect: config.reconnect,
+                secure: config.secure,
             },
             channels,
             logger,
+        }
+        if (config.username || config.password) {
+            options.identity = {}
+            if (config.username) options.identity.username = config.username
+            if (config.password) options.identity.password = config.password
         }
 
         this.client = new (tmi.client as any)(options)

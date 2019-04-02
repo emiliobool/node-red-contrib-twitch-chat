@@ -13,7 +13,11 @@ notifications:
 jobs:
   include:
     - stage: release
-      node_js: lts/*
+      node_js: 
+        - "6"
+        - "8"
+        - "10"
+        - node
       deploy:
         provider: script
         skip_cleanup: true

@@ -1,4 +1,5 @@
-# node-red-contrib-tmijs
+# node-red-contrib-twitch-chat
+[![Build Status](https://travis-ci.org/emiliobool/node-red-contrib-twitch-chat.svg?branch=master)](https://travis-ci.org/emiliobool/node-red-contrib-twitch-chat)
 
 Wrapper nodes for tmi.js v1.4.2
 

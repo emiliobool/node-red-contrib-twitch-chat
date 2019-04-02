@@ -28,7 +28,7 @@ describe('EVENTS', function(this: any) {
     // default node properties
     for (let event in events) {
         const type = `tmi-event-${event}`
-        describeFlow(type, function() {
+        describeFlow(`${type} -> output`, function() {
             it('should load', function(done) {
                 nodes(ConfigMockupNode, EventNodes)
                 flow(

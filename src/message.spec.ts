@@ -22,6 +22,7 @@ function messageNode(options: any = {}): any {
             channels: '',
             users: '',
             chat: true,
+            action: false,
             whisper: false,
             subscriber: false,
             mod: false,
@@ -47,5 +48,15 @@ describe('MESSAGE', function(this: any) {
                 done()
             })
         })
+        it('should filter messages by channel')
+        it('should filter messages by username')
+        it('should filter messages by message type chat')
+        it('should filter messages by message type whisper')
+        it('should filter messages by message type action')
+        it('should filter messages by user type subscriber')
+        it('should filter messages by user type mod')
+        it('should filter messages by user type broadcaster')
+        it('should filter messages by user type regular')
+        it('should filter messages by message')
     })
 })

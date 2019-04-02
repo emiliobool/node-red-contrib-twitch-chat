@@ -28,7 +28,7 @@ describe('COMMANDS', function(this: any) {
     // default node properties
     for (let command in commands) {
         const type = `tmi-command-${command}`
-        describeFlow(type, function() {
+        describeFlow(`${type} => [output1, output2]`, function() {
             it('should load', function(done) {
                 nodes(ConfigMockupNode, CommandNodes)
                 flow(

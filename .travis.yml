@@ -1,24 +1,23 @@
 language: node_js
 node_js:
-  - node
+    - node
 branches:
-  only:
-    - master
+    only:
+        - master
 notifications:
-  email:
-    recipients:
-      - contact@emiliobool.com
-    on_success: never 
-    on_failure: always 
+    email:
+        recipients:
+            - contact@emiliobool.com
+        on_success: never
+        on_failure: always
 jobs:
-  include:
-    - stage: release
-      node_js: 
-        - "6"
-        - "8"
-        - "10"
-        - "node"
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script: npx semantic-release
+    include:
+        - stage: release
+          node_js:
+              - '8'
+              - '10'
+              - 'node'
+          deploy:
+              provider: script
+              skip_cleanup: true
+              script: npx semantic-release

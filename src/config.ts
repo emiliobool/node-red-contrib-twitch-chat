@@ -43,10 +43,13 @@ export function ConfigNode(RED: Red) {
             channels,
             logger,
         }
-        if (config.username || config.password) {
+
+        const username = (this as any).credentials.username
+        const password = (this as any).credentials.password
+        if (username || password) {
             options.identity = {}
-            if (config.username) options.identity.username = config.username
-            if (config.password) options.identity.password = config.password
+            if (username) options.identity.username = username
+            if (password) options.identity.password = password
         }
 
         this.client = new (tmi.client as any)(options)
@@ -59,5 +62,10 @@ export function ConfigNode(RED: Red) {
             }
         })
     }
-    RED.nodes.registerType('tmi-config', TmiClient)
+    RED.nodes.registerType('tmi-config', TmiClient, {
+        credentials: {
+            username: { type: 'text' },
+            password: { type: 'password' },
+        },
+    })
 }

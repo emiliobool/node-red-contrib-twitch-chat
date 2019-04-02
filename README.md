@@ -1,6 +1,6 @@
 # node-red-contrib-tmijs
 
-Wrapper nodes for tmi.js
+Wrapper nodes for tmi.js v1.4.2
 
 A connection is automatically established during configuration load.
 Options to disable this will be added in a future release.

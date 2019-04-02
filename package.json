@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-tmi",
+  "name": "node-red-contrib-twitch-chat",
   "version": "0.0.0-development",
   "description": "Node-Red Nodes for TMI.js",
   "main": "lib/main.js",
@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/emiliobool/node-red-contrib-tmi.git"
+    "url": "https://github.com/emiliobool/node-red-contrib-twitch-chat.git"
   },
   "keywords": [
     "node-red",
@@ -64,7 +64,7 @@
   "author": "Emilio Bool",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/emiliobool/node-red-contrib-tmi/issues"
+    "url": "https://github.com/emiliobool/node-red-contrib-twitch-chat/issues"
   },
-  "homepage": "https://github.com/emiliobool/node-red-contrib-tmi#readme"
+  "homepage": "https://github.com/emiliobool/node-red-contrib-twitch-chat#readme"
 }

@@ -1,5 +1,10 @@
 import { Red, Node } from 'node-red'
-import { TmiClientNode } from './config';
+import { TmiClientNode } from './config'
+import {
+    connectedStatus,
+    connectingStatus,
+    disconnectedStatus,
+} from './helpers'
 
 export interface EventArgList {
     [action: string]: string[]
@@ -76,23 +81,32 @@ export function EventNodes(RED: Red) {
             config: any
         ): void {
             RED.nodes.createNode(this, config)
-            if(!config.config) return;
+            if (!config.config) return
             const configNode = RED.nodes.getNode(config.config) as TmiClientNode
-            if(!configNode) return;
+            if (!configNode) return
             const client = configNode.client as any
+
+            // connection status
+            const readyState = client.readyState()
+            if (readyState === 'OPEN') this.status(connectedStatus)
+            else if (readyState === 'CONNECTING') this.status(connectingStatus)
+            else this.status(disconnectedStatus)
+            client.on('connected', () => this.status(connectedStatus))
+            client.on('connecting', () => this.status(connectingStatus))
+            client.on('disconnected', () => this.status(disconnectedStatus))
+
             const eventHandler = () => {
                 const payload: any = {}
-                for(let i in args){
+                for (let i in args) {
                     payload[args[i]] = arguments[i]
                 }
                 this.send({ payload })
             }
             client.on(event, eventHandler)
-            this.on("close", (done) => {
-                client.off(event, eventHandler);
+            this.on('close', done => {
+                client.off(event, eventHandler)
                 done()
             })
-            
         })
     }
 

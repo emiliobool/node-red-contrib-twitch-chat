@@ -1,68 +1,92 @@
 <script type="text/javascript">
-    RED.nodes.registerType("tmi-event-message", {
-        category: "Twitch Chat",
-        color: "#6441a5",
-        defaults: {
-            config: {
-                type: "tmi-config"
+    RED
+        .nodes
+        .registerType("tmi-event-message", {
+            category: "Twitch Chat",
+            color: "#6441a5",
+            defaults: {
+                config: {
+                    type: "tmi-config"
+                },
+                name: {
+                    value: ""
+                },
+                channels: {
+                    value: ""
+                },
+                users: {
+                    value: ""
+                },
+                action: {
+                    value: false
+                },
+                chat: {
+                    value: true
+                },
+                whisper: {
+                    value: false
+                },
+                regular: {
+                    value: false
+                },
+                mod: {
+                    value: false
+                },
+                subscriber: {
+                    value: false
+                },
+                broadcaster: {
+                    value: false
+                },
+                message: {
+                    value: ""
+                }
             },
-            name: {
-                value: ""
+            inputs: 0,
+            outputs: 1,
+            icon: "twitch-arrow.png",
+            paletteLabel: "Message",
+            label: function () {
+                if (this.name) {
+                    return this.name
+                } else {
+
+                    let msg = ''
+                    if (this.message) {
+                        msg = this.message
+                    }
+                    if (this.users) {
+                        msg += `@${this.users}`
+                    }
+                    if (this.channels) {
+                        msg += `#${this.channels}`
+                    }
+                    if (msg) {
+                        return msg
+                    } else {
+                        return "Incoming Message"
+                    }
+                }
             },
-            channels: {
-                value: ""
-            },
-            users: {
-                value: ""
-            },
-            action: {
-                value: false
-            },
-            chat: {
-                value: true
-            },
-            whisper: {
-                value: false
-            },
-            regular: {
-                value: false
-            },
-            mod: {
-                value: false
-            },
-            subscriber: {
-                value: false
-            },
-            broadcaster: {
-                value: false
-            },
-            message: {
-                value: ""
-            }
-        },
-        inputs: 0,
-        outputs: 1,
-        icon: "twitch-arrow.png",
-        paletteLabel: "Message",
-        label: function () {
-            return this.name || "Incoming Message"
-        },
-        labelStyle: "tmi_node_label"
-    })
+            labelStyle: "tmi_node_label"
+        })
 </script>
 <script type="text/html" data-template-name="tmi-event-message">
     <div class="tmi-template">
 
         <div class="form-row">
-            <label for="node-input-config"><i class="icon-cog"></i> Config</label>
+            <label for="node-input-config">
+                <i class="icon-cog"></i> Config</label>
             <input type="text" id="node-input-config">
         </div>
         <div class="form-row">
-            <label for="node-input-channels"><i class="icon-th-large"></i> Channels</label>
+            <label for="node-input-channels">
+                <i class="icon-th-large"></i> Channels</label>
             <input type="text" id="node-input-channels">
         </div>
         <div class="form-row">
-            <label for="node-input-users"><i class="icon-user"></i> Users</label>
+            <label for="node-input-users">
+                <i class="icon-user"></i> Users</label>
             <input type="text" id="node-input-users">
         </div>
         <div class="form-row checkboxes">
@@ -85,12 +109,14 @@
         </div>
 
         <div class="form-row">
-            <label for="node-input-command"><i class="icon-envelope"></i> Message</label>
+            <label for="node-input-command">
+                <i class="icon-envelope"></i> Message</label>
             <input type="text" id="node-input-message">
         </div>
 
         <div class="form-row">
-            <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+            <label for="node-input-name">
+                <i class="icon-tag"></i> Name</label>
             <input type="text" id="node-input-name">
         </div>
     </div>
@@ -108,33 +134,34 @@
             <dl class="message-properties">
                 <dt>payload <span class="property-type">object</span></dt>
                 <dd>
-                <ul>
-                    <li>channel</li>
-                    <li>userstate</li>
-                    <li>message</li>
-                    <li>self</li>
-                    <li>matches</li>
-                </ul>
-            </dl>
-        </li>
-    </ol>
-    <h3>Node Properties</h3>
-    <dl class="">
-        <dt class="optional">Config</dt>
-        <dd>tmi.js Settings to use</dd>
-        <dt class="optional">Channels</dt>
-        <dd>Comma separated list of channels (without #) to accept</dd>
-        <dt class="optional">Users</dt>
-        <dd>Comma separated list of users to accept</dd>
-        <dt>Message Type</dt>
-        <dd>What type of messages to accept</dd>
-        <dt>User Type</dt>
-        <dd>What type of user to accept</dd>
-        <dt class="optional">Message</dt>
-        <dd>RegExp string to match the message being received, matches will be added to the payload property
-            <strong>"matches"</strong></dd>
-        <dt class="optional">Name</dt>
-        <dd>Node name used as label</dd>
+                    <ul>
+                        <li>channel</li>
+                        <li>userstate</li>
+                        <li>message</li>
+                        <li>self</li>
+                        <li>matches</li>
+                    </ul>
+                </dl>
+            </li>
+        </ol>
+        <h3>Node Properties</h3>
+        <dl class="">
+            <dt class="optional">Config</dt>
+            <dd>tmi.js Settings to use</dd>
+            <dt class="optional">Channels</dt>
+            <dd>Comma separated list of channels (without #) to accept</dd>
+            <dt class="optional">Users</dt>
+            <dd>Comma separated list of users to accept</dd>
+            <dt>Message Type</dt>
+            <dd>What type of messages to accept</dd>
+            <dt>User Type</dt>
+            <dd>What type of user to accept</dd>
+            <dt class="optional">Message</dt>
+            <dd>RegExp string to match the message being received, matches will be added to the payload property
+            <strong>"matches"</strong>
+            </dd>
+            <dt class="optional">Name</dt>
+            <dd>Node name used as label</dd>
 
-    </dl>
-</script>
+        </dl>
+    </script>

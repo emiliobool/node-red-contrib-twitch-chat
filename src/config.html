@@ -14,6 +14,15 @@
             channels: {
                 value: '',
             },
+            log_info: {
+                value: false,
+            },
+            log_warn: {
+                value: false,
+            },
+            log_error: {
+                value: true
+            }
         },
         label: function() {
             return this.name || `${this.username}#${this.channels}`

@@ -1,5 +1,6 @@
 import { Red, Node } from 'node-red'
 import { TmiClientNode } from './config'
+import { connectedStatus, connectingStatus, disconnectedStatus } from './helpers';
 
 interface CommandArgList {
     [action: string]: string[]
@@ -42,7 +43,6 @@ export const commands: CommandArgList = {
     whisper: ['username', 'message'],
 }
 
-
 export function CommandNodes(RED: Red) {
     function registerType(command: string, args: string[]) {
         RED.nodes.registerType(`tmi-command-${command}`, function(
@@ -50,11 +50,21 @@ export function CommandNodes(RED: Red) {
             config: any
         ): void {
             RED.nodes.createNode(this, config)
-            if(!config.config) return;
+            if (!config.config) return
             const configNode = RED.nodes.getNode(config.config) as TmiClientNode
-            if(!configNode) return;
+            if (!configNode) return
             const client = configNode.client
 
+            // connection status
+            const readyState = client.readyState()
+            if (readyState === 'OPEN') this.status(connectedStatus)
+            else if (readyState === 'CONNECTING') this.status(connectingStatus)
+            else this.status(disconnectedStatus)
+            client.on('connected', () => this.status(connectedStatus))
+            client.on('connecting', () => this.status(connectingStatus))
+            client.on('disconnected', () => this.status(disconnectedStatus))
+
+            // input
             this.on('input', (msg: any) => {
                 const msgCopy = Object.assign({}, msg)
 

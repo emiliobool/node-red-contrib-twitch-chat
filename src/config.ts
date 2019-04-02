@@ -6,6 +6,9 @@ export interface TmiClientConfig extends NodeProperties {
     username: string
     password: string
     channels: string
+    log_info: boolean
+    log_warn: boolean
+    log_error: boolean
 }
 export interface TmiClientNode extends Node {
     client: tmi.Client
@@ -17,6 +20,14 @@ export function ConfigNode(RED: Red) {
         const channels = config.channels
             .split(',')
             .map(channel => channel.trim())
+        const logger: any = {}
+        if (config.log_info) logger.info = this.log.bind(this)
+        else logger.info = () => {}
+        if (config.log_warn) logger.warn = this.warn.bind(this)
+        else logger.warn = () => {}
+        if (config.log_error) logger.error = this.error.bind(this)
+        else logger.error = () => {}
+
         const options: tmi.Options = {
             connection: {
                 reconnect: true,
@@ -27,11 +38,7 @@ export function ConfigNode(RED: Red) {
                 password: config.password,
             },
             channels,
-            logger: {
-                info: this.log.bind(this),
-                warn: this.warn.bind(this),
-                error: this.error.bind(this),
-            },
+            logger,
         }
 
         this.client = new (tmi.client as any)(options)

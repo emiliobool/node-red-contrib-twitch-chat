@@ -95,10 +95,10 @@ export function EventNodes(RED: Red) {
             client.on('connecting', () => this.status(connectingStatus))
             client.on('disconnected', () => this.status(disconnectedStatus))
 
-            const eventHandler = () => {
+            const eventHandler = (...eventArgs: any[]) => {
                 const payload: any = {}
                 for (let i in args) {
-                    payload[args[i]] = arguments[i]
+                    payload[args[i]] = eventArgs[i]
                 }
                 this.send({ payload })
             }

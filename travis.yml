@@ -17,7 +17,7 @@ jobs:
         - "6"
         - "8"
         - "10"
-        - node
+        - "node"
       deploy:
         provider: script
         skip_cleanup: true

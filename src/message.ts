@@ -1,9 +1,13 @@
 import { Red, Node, NodeProperties } from 'node-red'
 import { TmiClientNode } from './config'
 import { ChatUserstate } from 'tmi.js'
-import { connectedStatus, connectingStatus, disconnectedStatus } from './helpers';
+import {
+    connectedStatus,
+    connectingStatus,
+    disconnectedStatus,
+} from './helpers'
 
-interface TmiMessageConfig extends NodeProperties {
+export interface TmiMessageConfig extends NodeProperties {
     name: string
     config: string
     channels: string
@@ -96,7 +100,10 @@ export function MessageNode(RED: Red) {
         }
 
         function checkChannel(channel: string) {
-            return channels.length <= 0 || channels.includes(channel.replace(/^#/, ''))
+            return (
+                channels.length <= 0 ||
+                channels.includes(channel.replace(/^#/, ''))
+            )
         }
 
         function checkUser(userstate: ChatUserstate) {

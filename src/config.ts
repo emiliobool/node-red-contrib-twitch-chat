@@ -20,6 +20,8 @@ export function ConfigNode(RED: Red) {
         const channels = config.channels
             .split(',')
             .map(channel => channel.trim())
+            .filter(Boolean)
+
         const logger: any = {}
         if (config.log_info) logger.info = this.log.bind(this)
         else logger.info = () => {}
@@ -46,7 +48,9 @@ export function ConfigNode(RED: Red) {
 
         this.on('close', done => {
             this.client.removeAllListeners()
-            this.client.disconnect().finally(done)
+            if(!['CLOSED', 'CLOSING'].includes(this.client.readyState())){
+                this.client.disconnect().finally(done)
+            }
         })
     }
     RED.nodes.registerType('tmi-config', TmiClient)

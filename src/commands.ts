@@ -1,10 +1,5 @@
 import { Red, Node } from 'node-red'
-import { TmiClientNode } from './config'
-import {
-    connectedStatus,
-    connectingStatus,
-    disconnectedStatus,
-} from './helpers'
+import { TmiClientNode, statusUpdater } from './config'
 
 interface CommandArgList {
     [action: string]: string[]
@@ -60,14 +55,7 @@ export function CommandNodes(RED: Red) {
             const client = configNode.client
 
             // connection status
-            const readyState = client.readyState()
-            this.status({})
-            if (readyState === 'OPEN') this.status(connectedStatus)
-            else if (readyState === 'CONNECTING') this.status(connectingStatus)
-            else this.status(disconnectedStatus)
-            client.on('connected', () => this.status(connectedStatus))
-            client.on('connecting', () => this.status(connectingStatus))
-            client.on('disconnected', () => this.status(disconnectedStatus))
+            const clearStatusHandlers = statusUpdater(this, client)
 
             // input
             this.on('input', (msg: any) => {
@@ -95,6 +83,9 @@ export function CommandNodes(RED: Red) {
                     .catch(error => {
                         this.send([null, error])
                     })
+            })
+            this.on('close', done => {
+                clearStatusHandlers()
             })
         })
     }

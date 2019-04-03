@@ -5,22 +5,6 @@ const path = require('path')
 export const nunjucks = require('nunjucks')
 nunjucks.configure(path.resolve(__dirname, 'templates'), { autoescape: true })
 
-export const connectedStatus: NodeStatus = {
-    fill: 'green',
-    shape: 'dot',
-    text: 'connected',
-}
-export const connectingStatus: NodeStatus = {
-    fill: 'green',
-    shape: 'ring',
-    text: 'connecting...',
-}
-export const disconnectedStatus: NodeStatus = {
-    fill: 'red',
-    shape: 'ring',
-    text: 'disconnected',
-}
-
 export function stringifyFunctions(data: any) {
     const replacements: any = {}
     let stringified = JSON.stringify(

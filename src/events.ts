@@ -1,11 +1,5 @@
 import { Red, Node } from 'node-red'
-import { TmiClientNode } from './config'
-import {
-    connectedStatus,
-    connectingStatus,
-    disconnectedStatus,
-} from './helpers'
-
+import { TmiClientNode, statusUpdater } from './config'
 export interface EventArgList {
     [action: string]: string[]
 }
@@ -87,14 +81,7 @@ export function EventNodes(RED: Red) {
             const client = configNode.client as any
 
             // connection status
-            const readyState = client.readyState()
-            this.status({})
-            if (readyState === 'OPEN') this.status(connectedStatus)
-            else if (readyState === 'CONNECTING') this.status(connectingStatus)
-            else this.status(disconnectedStatus)
-            client.on('connected', () => this.status(connectedStatus))
-            client.on('connecting', () => this.status(connectingStatus))
-            client.on('disconnected', () => this.status(disconnectedStatus))
+            const clearStatusHandlers = statusUpdater(this, client)
 
             const eventHandler = (...eventArgs: any[]) => {
                 const payload: any = {}
@@ -105,7 +92,8 @@ export function EventNodes(RED: Red) {
             }
             client.on(event, eventHandler)
             this.on('close', done => {
-                client.off(event, eventHandler)
+                client.removeListener(event, eventHandler)
+                clearStatusHandlers()
                 done()
             })
         })

@@ -1,11 +1,6 @@
 import { Red, Node, NodeProperties } from 'node-red'
-import { TmiClientNode } from './config'
+import { TmiClientNode, statusUpdater } from './config'
 import { ChatUserstate } from 'tmi.js'
-import {
-    connectedStatus,
-    connectingStatus,
-    disconnectedStatus,
-} from './helpers'
 
 export interface TmiMessageConfig extends NodeProperties {
     name: string
@@ -32,6 +27,8 @@ export function MessageNode(RED: Red) {
         this: Node,
         config: TmiMessageConfig
     ): void {
+        const time = new Date().getTime()
+        console.log('loaded', time)
         RED.nodes.createNode(this, config)
         if (!config.config) return
         const configNode = RED.nodes.getNode(config.config) as TmiClientNode
@@ -39,16 +36,8 @@ export function MessageNode(RED: Red) {
         const client = configNode.client as any
 
         // connection status
-        const readyState = client.readyState()
-        this.status({})
-        if (readyState === 'OPEN') this.status(connectedStatus)
-        else if (readyState === 'CONNECTING') this.status(connectingStatus)
-        else this.status(disconnectedStatus)
-        client.on('connected', () => this.status(connectedStatus))
-        client.on('connecting', () => this.status(connectingStatus))
-        client.on('disconnected', () => this.status(disconnectedStatus))
+        const clearStatusHandlers = statusUpdater(this, client)
 
-        //
         const channels = config.channels
             .split(',')
             .map(channel => channel.trim().replace(/^#/, ''))
@@ -127,6 +116,7 @@ export function MessageNode(RED: Red) {
                 checkMessageType(userstate) &&
                 checkUserType(userstate)
             ) {
+                console.log('eventHandlerCalled', time)
                 const matches = checkMessage(message)
                 if (matches) {
                     this.send({
@@ -145,7 +135,8 @@ export function MessageNode(RED: Red) {
         client.on('message', eventHandler)
 
         this.on('close', done => {
-            client.off('message', eventHandler)
+            client.removeListener('message', eventHandler)
+            clearStatusHandlers()
             done()
         })
     })

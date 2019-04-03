@@ -23,7 +23,6 @@ export function configNode(options: any = {}): any {
             type: 'tmi-config',
             name: 'name',
             username: '',
-            password: '',
             channels: '',
             log_info: false,
             log_warn: false,

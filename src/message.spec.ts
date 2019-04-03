@@ -8,6 +8,7 @@ import {
     describeFlow,
     nodes,
     outputNode,
+    nodeInput,
 } from './bootstrap.spec'
 import { ConfigMockupNode, configNode } from './config.spec'
 import { MessageNode } from './message'
@@ -48,15 +49,79 @@ describe('MESSAGE', function(this: any) {
                 done()
             })
         })
-        it('should filter messages by channel')
-        it('should filter messages by username')
-        it('should filter messages by message type chat')
-        it('should filter messages by message type whisper')
-        it('should filter messages by message type action')
-        it('should filter messages by user type subscriber')
-        it('should filter messages by user type mod')
-        it('should filter messages by user type broadcaster')
-        it('should filter messages by user type regular')
-        it('should filter messages by message')
+        it('should filter by channel')
+        it('should filter by username')
+        it('should filter by message type chat')
+        it('should filter by message type whisper')
+        it('should filter by message type action')
+        it('should filter by user type subscriber')
+        it('should filter by user type mod')
+        it('should filter by user type broadcaster')
+        it('should filter by user type regular')
+    })
+    describeFlow('tmi-event-message(message,test) -> output', function() {
+        it('should match', function(done) {
+            nodes(ConfigMockupNode, MessageNode)
+            flow(
+                configNode(),
+                messageNode({ message: 'test' }),
+                outputNode()
+            )
+            execute(function() {
+                const message = 'emilio test'
+                const client = getNode('config').client
+                nodeInput('output', msg => {
+                    msg.payload.message.should.equal(message)
+                    done()
+                })
+                client.mockMessage(message)
+            })
+        })
+        it('should not match', function(done) {
+            const message = 'other message'
+            const client = getNode('config').client
+            nodeInput('output', msg => {
+                done(new Error('Message should be filtered out'))
+            })
+            client.mockMessage(message)
+            setTimeout(done, 10)
+        })
+    })
+    describeFlow('tmi-event-message(whole word) -> output', function() {
+        it('should match', function(done) {
+            nodes(ConfigMockupNode, MessageNode)
+            flow(
+                configNode(),
+                messageNode({ message: '\\btest\\b' }),
+                outputNode()
+            )
+            execute(function() {
+                const message = 'emilio test should match'
+                const client = getNode('config').client
+                nodeInput('output', msg => {
+                    msg.payload.message.should.equal(message)
+                    done()
+                })
+                client.mockMessage(message)
+            })
+        })
+        it('should match', function(done) {
+            const message = 'other test'
+            const client = getNode('config').client
+            nodeInput('output', msg => {
+                msg.payload.message.should.equal(message)
+                done()
+            })
+            client.mockMessage(message)
+        })
+        it('should not match', function(done) {
+            const message = 'other testmessage'
+            const client = getNode('config').client
+            nodeInput('output', msg => {
+                done(new Error('Message should not match'))
+            })
+            client.mockMessage(message)
+            setTimeout(done, 10)
+        })
     })
 })

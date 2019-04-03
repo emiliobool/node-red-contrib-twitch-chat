@@ -61,6 +61,6 @@ export function outputNode(options = {}): any {
     )
 }
 
-export const CHANNEL1 = process.env.TEST_CHANNEL1
-export const USERNAME1 = process.env.TEST_USERNAME1
-export const PASSWORD1 = process.env.TEST_PASSWORD1
+export const CHANNEL1 = process.env.TEST_CHANNEL1 || ''
+export const USERNAME1 = process.env.TEST_USERNAME1 || ''
+export const PASSWORD1 = process.env.TEST_PASSWORD1 || ''

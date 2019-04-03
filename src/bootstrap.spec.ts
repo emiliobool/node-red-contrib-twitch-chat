@@ -7,6 +7,7 @@ helper.init()
 let _nodes = new Set()
 let _flow: any = []
 let _inputEvents = new Set()
+let _credentials: any = {}
 
 export function nodes(...nodes: any) {
     nodes.forEach((node: any) => _nodes.add(node))
@@ -15,9 +16,12 @@ export function nodes(...nodes: any) {
 export function flow(...flow: any) {
     _flow = flow
 }
+export function credentials(credentials: any) {
+    _credentials = credentials
+}
 
 export function execute(fn: any) {
-    helper.load([..._nodes], _flow, fn)
+    helper.load([..._nodes], _flow, _credentials, fn)
 }
 
 export function describeFlow(title: string, fn: any) {

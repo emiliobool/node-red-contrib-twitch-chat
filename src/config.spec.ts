@@ -12,6 +12,7 @@ import {
     nodes,
     USERNAME1,
     PASSWORD1,
+    credentials,
 } from './bootstrap.spec'
 import { ClientMockup } from './ClientMockup'
 
@@ -68,12 +69,17 @@ describe('CONFIG', function(this: any) {
     describeFlow('tmi-config(login)', function() {
         it('should load and connect', function(done) {
             nodes(ConfigNode)
-            flow(configNode({ username: USERNAME1, password: PASSWORD1 }))
+            flow(configNode({ username: USERNAME1 }))
+            credentials({
+                config: { password: PASSWORD1 },
+            })
             execute(function() {
                 getNode('config').should.have.property('name', 'name')
                 const client = getNode('config').client
                 client.on('connected', function() {
                     expect(client.readyState()).to.equal('OPEN')
+                    expect(client.opts.identity).to.have.property('username')
+                    expect(client.opts.identity).to.have.property('password')
                     done()
                 })
             })

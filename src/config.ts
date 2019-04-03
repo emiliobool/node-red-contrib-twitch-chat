@@ -4,7 +4,6 @@ import tmi from 'tmi.js'
 export interface TmiClientConfig extends NodeProperties {
     name: string
     username: string
-    password: string
     channels: string
     reconnect: boolean
     secure: boolean
@@ -44,7 +43,7 @@ export function ConfigNode(RED: Red) {
             logger,
         }
 
-        const username = (this as any).credentials.username
+        const username = config.username
         const password = (this as any).credentials.password
         if (username || password) {
             options.identity = {}
@@ -53,7 +52,7 @@ export function ConfigNode(RED: Red) {
         }
 
         this.client = new (tmi.client as any)(options)
-        this.client.connect()
+        this.client.connect().catch(() => {})
 
         this.on('close', done => {
             this.client.removeAllListeners()

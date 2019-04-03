@@ -88,6 +88,7 @@ export function EventNodes(RED: Red) {
 
             // connection status
             const readyState = client.readyState()
+            this.status({})
             if (readyState === 'OPEN') this.status(connectedStatus)
             else if (readyState === 'CONNECTING') this.status(connectingStatus)
             else this.status(disconnectedStatus)

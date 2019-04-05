@@ -65,7 +65,7 @@ describe('MESSAGE', function(this: any) {
             nodes(ConfigMockupNode, MessageNode)
             flow(
                 configNode(),
-                messageNode({ message: 'test' }),
+                messageNode({ message_regexp: 'test' }),
                 outputNode()
             )
             execute(function() {
@@ -82,6 +82,7 @@ describe('MESSAGE', function(this: any) {
             const message = 'other message'
             const client = getNode('config').client
             nodeInput('output', msg => {
+                console.log(msg)
                 done(new Error('Message should be filtered out'))
             })
             client.mockMessage(message)
@@ -93,7 +94,7 @@ describe('MESSAGE', function(this: any) {
             nodes(ConfigMockupNode, MessageNode)
             flow(
                 configNode(),
-                messageNode({ message: '\\btest\\b' }),
+                messageNode({ message_regexp: '\\btest\\b' }),
                 outputNode()
             )
             execute(function() {

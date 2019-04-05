@@ -5,8 +5,9 @@ import { ChatUserstate } from 'tmi.js'
 export interface TmiMessageConfig extends NodeProperties {
     name: string
     config: string
-    channels: string
-    user_list: string
+    channels_filter: string
+    users?: string
+    users_filter: string
 
     // message type
     action: boolean
@@ -19,7 +20,7 @@ export interface TmiMessageConfig extends NodeProperties {
     broadcaster: boolean
     regular: boolean
 
-    message: string
+    message_regexp: string
     message_flags: string
 }
 
@@ -38,11 +39,12 @@ export function MessageNode(RED: Red) {
         // connection status
         const clearStatusHandlers = statusUpdater(this, client)
 
-        const channels = config.channels
+        const channels = config.channels_filter
             .split(',')
             .map(channel => channel.trim().replace(/^#/, ''))
             .filter(Boolean)
-        const users = config.user_list
+        let users_filter = config.users_filter || config.users || ''
+        const users = users_filter
             .split(',')
             .map(user => user.trim().toLowerCase())
             .filter(Boolean)
@@ -61,7 +63,10 @@ export function MessageNode(RED: Red) {
         const ignoreUserType =
             (subscriber && broadcaster && regular && mod) ||
             (!subscriber && !broadcaster && !regular && !mod)
-        const messageRegExp = new RegExp(config.message, config.message_flags)
+        const messageRegExp = new RegExp(
+            config.message_regexp,
+            config.message_flags
+        )
 
         function checkMessageType(userstate: ChatUserstate): boolean {
             return (

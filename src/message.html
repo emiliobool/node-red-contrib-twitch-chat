@@ -41,6 +41,9 @@
                 },
                 message: {
                     value: ""
+                },
+                message_flags: {
+                    value: ""
                 }
             },
             inputs: 0,
@@ -83,12 +86,12 @@
         <div class="form-row">
             <label for="node-input-channels">
                 <i class="icon-th-large"></i> Channels</label>
-            <input type="text" id="node-input-channels">
+            <input type="text" id="node-input-channels" placeholder="Comma Separated">
         </div>
         <div class="form-row">
             <label for="node-input-users">
                 <i class="icon-user"></i> Users</label>
-            <input type="text" id="node-input-users">
+            <input type="text" id="node-input-users" placeholder="Comma Separated">
         </div>
         <div class="form-row checkboxes">
             <input type="checkbox" id="node-input-action">
@@ -109,16 +112,17 @@
             <label for="node-input-broadcaster" style="width: auto">Broadcaster</label>
         </div>
 
-        <div class="form-row">
-            <label for="node-input-command">
+        <div class="form-row tmi-regexp">
+            <label for="node-input-message">
                 <i class="icon-envelope"></i> Message</label>
-            <input type="text" id="node-input-message">
+            <input type="text" id="node-input-message" class="regexp-field" placeholder="RegExp String">
+            <input type="text" id="node-input-message_flags" class="flags-field" placeholder="RegExp Flags">
         </div>
 
         <div class="form-row">
             <label for="node-input-name">
                 <i class="icon-tag"></i> Name</label>
-            <input type="text" id="node-input-name">
+            <input type="text" id="node-input-name" placeholder="Node Label">
         </div>
     </div>
 </script>

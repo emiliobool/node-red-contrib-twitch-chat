@@ -20,6 +20,7 @@ export interface TmiMessageConfig extends NodeProperties {
     regular: boolean
 
     message: string
+    message_flags: string
 }
 
 export function MessageNode(RED: Red) {
@@ -28,7 +29,6 @@ export function MessageNode(RED: Red) {
         config: TmiMessageConfig
     ): void {
         const time = new Date().getTime()
-        console.log('loaded', time)
         RED.nodes.createNode(this, config)
         if (!config.config) return
         const configNode = RED.nodes.getNode(config.config) as TmiClientNode
@@ -61,7 +61,7 @@ export function MessageNode(RED: Red) {
         const ignoreUserType =
             (subscriber && broadcaster && regular && mod) ||
             (!subscriber && !broadcaster && !regular && !mod)
-        const messageRegExp = new RegExp(config.message)
+        const messageRegExp = new RegExp(config.message, config.message_flags)
 
         function checkMessageType(userstate: ChatUserstate): boolean {
             return (
@@ -116,7 +116,6 @@ export function MessageNode(RED: Red) {
                 checkMessageType(userstate) &&
                 checkUserType(userstate)
             ) {
-                console.log('eventHandlerCalled', time)
                 const matches = checkMessage(message)
                 if (matches) {
                     this.send({

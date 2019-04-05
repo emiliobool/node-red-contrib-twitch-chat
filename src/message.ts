@@ -6,7 +6,7 @@ export interface TmiMessageConfig extends NodeProperties {
     name: string
     config: string
     channels: string
-    users: string
+    user_list: string
 
     // message type
     action: boolean
@@ -42,7 +42,7 @@ export function MessageNode(RED: Red) {
             .split(',')
             .map(channel => channel.trim().replace(/^#/, ''))
             .filter(Boolean)
-        const users = config.users
+        const users = config.user_list
             .split(',')
             .map(user => user.trim().toLowerCase())
             .filter(Boolean)

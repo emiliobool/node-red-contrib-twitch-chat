@@ -21,7 +21,7 @@ function messageNode(options: any = {}): any {
             name: 'name',
             config: 'config',
             channels: '',
-            users: '',
+            user_list: '',
             chat: true,
             action: false,
             whisper: false,

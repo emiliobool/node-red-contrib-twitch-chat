@@ -5,6 +5,7 @@ import { ChatUserstate } from 'tmi.js'
 export interface TmiMessageConfig extends NodeProperties {
     name: string
     config: string
+    channels?: string
     channels_filter: string
     users?: string
     users_filter: string
@@ -39,7 +40,8 @@ export function MessageNode(RED: Red) {
         // connection status
         const clearStatusHandlers = statusUpdater(this, client)
 
-        const channels = config.channels_filter
+        const channels_filter = config.channels_filter || config.channels || ''
+        const channels = channels_filter
             .split(',')
             .map(channel => channel.trim().replace(/^#/, ''))
             .filter(Boolean)

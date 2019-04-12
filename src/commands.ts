@@ -86,6 +86,7 @@ export function CommandNodes(RED: Red) {
             })
             this.on('close', done => {
                 clearStatusHandlers()
+                done()
             })
         })
     }

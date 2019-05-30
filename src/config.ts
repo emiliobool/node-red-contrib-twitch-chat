@@ -94,8 +94,9 @@ export function ConfigNode(RED: Red) {
         this.on('close', done => {
             this.client.removeAllListeners()
             if (!['CLOSED', 'CLOSING'].includes(this.client.readyState())) {
-                this.client.disconnect().finally(done)
+                this.client.disconnect()
             }
+            done()
         })
     }
     RED.nodes.registerType('tmi-config', TmiClient, {

@@ -82,7 +82,7 @@ export function MessageNode(RED: Red) {
             return (
                 ignoreUserType ||
                 (mod && userstate.mod) ||
-                (userstate.badges !== undefined &&
+                (userstate.badges &&
                     ((subscriber && userstate.badges.subscriber) ||
                         (broadcaster && userstate.badges.broadcaster) ||
                         (regular &&

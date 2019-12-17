@@ -20,4 +20,4 @@ jobs:
           deploy:
               provider: script
               skip_cleanup: true
-              script: npx semantic-release
+              script: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}" && npx semantic-release

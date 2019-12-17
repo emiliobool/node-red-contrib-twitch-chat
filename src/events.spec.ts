@@ -29,7 +29,7 @@ describe('EVENTS', function(this: any) {
     for (let event in events) {
         const type = `tmi-event-${event}`
         describeFlow(`${type} -> output`, function() {
-            it('should load', function(done) {
+            it('should load', function(done: () => void) {
                 nodes(ConfigMockupNode, EventNodes)
                 flow(
                     configNode(),

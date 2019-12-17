@@ -93,7 +93,7 @@ export function EventNodes(RED: Red) {
                 this.send({ payload })
             }
             client.on(event, eventHandler)
-            this.on('close', done => {
+            this.on('close', (done: () => void) => {
                 client.removeListener(event, eventHandler)
                 clearStatusHandlers()
                 done()

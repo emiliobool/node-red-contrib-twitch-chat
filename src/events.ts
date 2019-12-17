@@ -15,7 +15,7 @@ export const events: EventArgList = {
     disconnected: ['reason'],
     emoteonly: ['channel', 'enabled'],
     emotesets: ['sets', 'obj'],
-    followersonly: ['channel', 'enabled', 'length'],
+    followersonly: ['channel', 'enabled', 'minutes'],
     giftpaidupgrade: ['channel', 'username', 'sender', 'userstate'],
     hosted: ['channel', 'username', 'viewers', 'autohost'],
     hosting: ['channel', 'target', 'viewers'],
@@ -66,6 +66,8 @@ export const events: EventArgList = {
     unmod: ['channel', 'username'],
     vips: ['channel', 'vips'],
     whisper: ['from', 'userstate', 'message', 'self'],
+    primepaidupgrade: ['channel', 'username', 'methods', 'userstate'],
+    automod: ['channel', 'msgID', 'message'],
 }
 
 export function EventNodes(RED: Red) {
